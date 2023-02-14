@@ -1,24 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import Star from "./components/star";
+
+const items: number[] = [...(new Array(5).keys() as any)];
 
 function App() {
+  const [activeIndex, setActiveIndex] = useState<number>();
+
+  const onClickStar = (index: number) => {
+    setActiveIndex((oldState) => (oldState === index ? undefined : index));
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      {items.map((index) => (
+        <Star
+          onClick={() => onClickStar(index)}
+          key={`star_${index}`}
+          isActive={index <= activeIndex!}
+        />
+      ))}
     </div>
   );
 }
